@@ -60,7 +60,7 @@ const playListData = [
   const songs = [
     {
       id: 0,
-      uri: "https://data20.chiasenhac.com/downloads/2061/1/2060821-946b2223/m4a/Anh%20Thanh%20Nien%20-%20HuyR.m4a",
+      uri: "https://data20.chiasenhac.com/downloads/2061/5/2060821-946b2223/m4a/Anh%20Thanh%20Nien%20-%20HuyR.m4a",
       picture: 'https://i.ytimg.com/vi/HPL74s4VPdk/maxresdefault.jpg',
       name: 'Anh thanh niên',
       singer: 'HuyR',
