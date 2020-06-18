@@ -152,6 +152,9 @@ class MiniPlayer extends React.Component {
         if (!this.props.player){
             return <View></View>
         }else {
+            if (!this.props.status.isPlaying){
+                return <View></View>
+            }
             return (
                 <TouchableOpacity onPress={() => this.props.navigate('Player', {currentSong: this.props.player.currentSong,songPos: this.props.player.position, playlist: this.props.player.playlist})}>
                     <View style={styles.container}>

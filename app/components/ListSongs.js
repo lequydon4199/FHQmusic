@@ -1,16 +1,9 @@
 import React from 'react';
 import { FlatList, View, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native';
-import  * as Animatable from 'react-native-animatable';
 import styles from './ComponentStyles/ListSongs';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
+import SongOption from './SongOption';
 import { Icon } from 'react-native-elements';
 import { device } from '../config/ScreenDimensions';
-import { List } from 'react-native-paper';
 import { addSongToHistory } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -99,22 +92,7 @@ class ListSongs extends React.Component {
             null}
           </View>  
           <View style={styles.optionIcon}>
-            <Menu>
-              <MenuTrigger>
-                <Icon name="more-vert" size={device.width*0.08} />
-              </MenuTrigger>
-              <MenuOptions optionsContainerStyle={{width: 100}}>
-                <MenuOption onSelect={() => alert(`Tùy chọn 1`)} >
-                  <Text>Tùy chọn 1</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert(`Tùy chọn 2`)} >
-                  <Text>Tùy chọn 2</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert(`Tùy chọn 3`)} >
-                  <Text>Tùy chọn 3</Text>
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
+            <SongOption song={item}/>
           </View>
         </View>
         </TouchableOpacity>

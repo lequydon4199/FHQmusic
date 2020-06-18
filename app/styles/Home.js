@@ -69,8 +69,13 @@ export default StyleSheet.create({
     color: 'gray'
   },
   optionIcon: {
+    marginLeft: device.width*0.05,
     height: device.width*0.27,
     width: device.width*0.08,
     justifyContent: 'center',
+  },
+  menuOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
   }
 });
