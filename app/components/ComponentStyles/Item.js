@@ -7,7 +7,7 @@ export default StyleSheet.create({
     height: device.height*0.22,
     width: device.width,
     backgroundColor: 'white',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.3,
     borderColor: 'gray'
   },
   titleText:{

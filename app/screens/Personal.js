@@ -1,13 +1,15 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StatusBar, Image, TouchableOpacity, Platform, AsyncStorage, ActivityIndicator } from 'react-native';
+import { SafeAreaView, View, Text, StatusBar, Image, ScrollView, TouchableOpacity, Platform, AsyncStorage, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements'
 import styles from '../styles/Personal';
-import { list, defaultUser } from '../data/data';
+import { list } from '../data/data';
 import MiniPlayer from '../components/MiniPlayer';
 import ListSongs from '../components/ListSongs';
 import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+console.disableYellowBox = true;
 
 class Personal extends React.Component {
   state = {
@@ -67,59 +69,60 @@ class Personal extends React.Component {
                 />
               </View>
             </View>
-            <View style={{backgroundColor: 'white', marginBottom: 10}}>
-            
-              <View>
-                <TouchableOpacity 
-                  onPress={()=> navigate('SongList', {title: list[0].title, type: list[0].type, data: this.props.user.mySong})}
-                  activeOpacity={0.3}
-                >
-                  <ListItem
-                    title={list[0].title}
-                    leftIcon={{ name: list[0].icon }}
-                    bottomDivider
-                    chevron
-                  />
-                </TouchableOpacity>
-              </View> 
-              <View>
-                <TouchableOpacity 
-                  onPress={()=> navigate('SongList', {title: list[1].title, type: list[1].type, data: this.props.user.favorite})}
-                  activeOpacity={0.3}
-                >
-                  <ListItem
-                    title={list[1].title}
-                    leftIcon={{ name: list[1].icon }}
-                    bottomDivider
-                    chevron
-                  />
-                </TouchableOpacity>
-              </View> 
-              <View>
-                <TouchableOpacity 
-                  onPress={()=> navigate('SongList', {title: list[2].title, type: list[2].type})}
-                  activeOpacity={0.3}
-                >
-                  <ListItem
-                    title={list[2].title}
-                    leftIcon={{ name: list[2].icon }}
-                    bottomDivider
-                    chevron
-                  />
-                </TouchableOpacity>
-              </View>  
-              
-            </View>
-            <View style={{backgroundColor: 'white', flex: 1}}>
-              <ListItem
-                title='Lịch sử'
-                leftIcon={{name: 'history'}}
-                bottomDivider
-              />
-              <View style={{flex: 1}}>
-                <ListSongs type="history" navigate={navigate} data={this.props.user.history}/>
+            <ScrollView style={{flex: 1}}>
+              <View style={{backgroundColor: 'white', marginBottom: 10}}>
+                <View>
+                  <TouchableOpacity 
+                    onPress={()=> navigate('SongList', {title: list[0].title, type: list[0].type, data: this.props.user.mySong})}
+                    activeOpacity={0.3}
+                  >
+                    <ListItem
+                      title={list[0].title}
+                      leftIcon={{ name: list[0].icon }}
+                      bottomDivider
+                      chevron
+                    />
+                  </TouchableOpacity>
+                </View> 
+                <View>
+                  <TouchableOpacity 
+                    onPress={()=> navigate('SongList', {title: list[1].title, type: list[1].type, data: this.props.user.favorite})}
+                    activeOpacity={0.3}
+                  >
+                    <ListItem
+                      title={list[1].title}
+                      leftIcon={{ name: list[1].icon }}
+                      bottomDivider
+                      chevron
+                    />
+                  </TouchableOpacity>
+                </View> 
+                <View>
+                  <TouchableOpacity 
+                    onPress={()=> navigate('SongList', {title: list[2].title, type: list[2].type})}
+                    activeOpacity={0.3}
+                  >
+                    <ListItem
+                      title={list[2].title}
+                      leftIcon={{ name: list[2].icon }}
+                      bottomDivider
+                      chevron
+                    />
+                  </TouchableOpacity>
+                </View>  
+                
               </View>
-            </View>
+              <View style={{backgroundColor: 'white', flex: 1}}>
+                <ListItem
+                  title='Lịch sử'
+                  leftIcon={{name: 'history'}}
+                  bottomDivider
+                />
+                <View style={{flex: 1}}>
+                  <ListSongs type="history" navigate={navigate} data={this.props.user.history}/>
+                </View>
+              </View>
+            </ScrollView>
           </View>
         <MiniPlayer navigate={navigate}/>
         </View>

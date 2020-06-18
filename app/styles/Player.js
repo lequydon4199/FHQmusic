@@ -4,7 +4,7 @@ import {device} from '../config/ScreenDimensions'
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#806a7f',
+        backgroundColor: '#6bb5ff',
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
       },
       header: {

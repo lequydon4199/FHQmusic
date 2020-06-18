@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, ScrollView, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
 import styles from './ComponentStyles/Item';
 import PropTypes from 'prop-types';
-import { addSongToHistory } from '../actions/index';
+import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -12,9 +12,10 @@ class Item extends React.Component {
   }
 
   playSong = async index => {
+    this.props.navigate("Player", {songPos: index, playlist: this.props.data});
     const userId = await AsyncStorage.getItem('user');
     if (userId){
-      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+      const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -22,7 +23,8 @@ class Item extends React.Component {
 				},
 				body: JSON.stringify({userId: userId, songId: this.props.data[index]._id})
       });
-      this.props.addSongToHistory(this.props.data[index])
+      const updatedUser = await response.json();
+      this.props.setUser(updatedUser);
     }else{
       fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
 				method: 'PUT',
@@ -33,7 +35,6 @@ class Item extends React.Component {
 				body: JSON.stringify({songId: this.props.data[index]._id})
       });
     }
-    this.props.navigate("Player", {songPos: index, playlist: this.props.data});
   }
 
   pressItem = index => {
@@ -91,7 +92,7 @@ Item.defaultProps = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+  setUser: bindActionCreators(setUser, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(Item);

@@ -2,15 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, Alert, AsyncStorage } from 'react-native';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import { Icon } from 'react-native-elements';
+import { setUser } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class SongOption extends React.Component {
+    constructor(props){
+        super(props)
+    }
 
     addToFavorite = async () => {
         const userId = await AsyncStorage.getItem('user');
         if (!userId){
             return Alert.alert('Bạn chưa đăng nhập!')
         }
-        fetch(`https://toeic-test-server.herokuapp.com/music/user/add-favorite`,{
+        const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-favorite`,{
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -19,6 +25,9 @@ class SongOption extends React.Component {
             body: JSON.stringify({userId: userId, songId: this.props.song._id})
         });
         const result = await response.json();
+        if (result){
+            this.props.setUser(result);
+        }
     }
 
     addToSongs = async () => {
@@ -37,11 +46,13 @@ class SongOption extends React.Component {
         const result = await response.json();
         if (!result){
             return Alert.alert('Bạn đã thêm bài hát này!')
+        }else{
+            this.props.setUser(result);
         }
     }
 
     addToPlaylist = () => {
-        Alert.alert('Sắp có')
+        Alert.alert('Sắp ra mắt')
     }
 
     render(){
@@ -66,7 +77,11 @@ class SongOption extends React.Component {
     }
 }
 
-export default SongOption
+const mapDispatchToProps = (dispatch) => ({
+    setUser: bindActionCreators(setUser, dispatch)
+  });
+  
+  export default connect(null, mapDispatchToProps)(SongOption);
 
 const styles = StyleSheet.create({
     menuOption: {

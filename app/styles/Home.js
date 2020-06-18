@@ -9,7 +9,6 @@ export default StyleSheet.create({
     backgroundColor: '#eeeeee' 
   },
   scrollView: {
-    height: device.height*0.78,
     backgroundColor: '#E0E0E0'
   },
   suggestArea: {
@@ -39,7 +38,6 @@ export default StyleSheet.create({
   },
   song: {
     backgroundColor: 'white',
-    paddingTop: 5,
   },
   titleText:{
     height: device.height*0.04,

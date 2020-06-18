@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
+import { Text, View, Image, StatusBar, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import {Slider} from 'react-native-elements';
 import Moment from 'moment';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +9,7 @@ import { Audio } from 'expo-av';
 import { setSong, updateSongStatus } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ListSongs from '../components/ListSongs'
 
 const LOOPING_TYPE_ALL = 0;
 const LOOPING_TYPE_ONE = 1;
@@ -188,6 +189,7 @@ class Player extends React.Component {
             <Text style={styles.song}>{this.props.player.currentSong.name} - {this.props.player.currentSong.singer.name}</Text>
           </TouchableOpacity>
         </View>
+        <ScrollView>
         <View style={styles.image}>
           <Image source={{uri: this.props.player.currentSong.picture}} style={styles.imageSong}></Image>
         </View>
@@ -234,8 +236,9 @@ class Player extends React.Component {
             {/* <MaterialIcons name="repeat-one" style={styles.repeat} size={32}></MaterialIcons> */}
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.commentContainer}>
-          <Text style={styles.comment}>Bình luận</Text>
+        <View style={{marginTop: 20}}>
+          <ListSongs type="songs" navigate={this.props.navigation.navigate} data={this.playlist}/> 
+        </View>
         </ScrollView>
       </SafeAreaView>
     );

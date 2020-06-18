@@ -9,13 +9,14 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const {width, height} = Dimensions.get('window');
 import {Surface} from 'react-native-paper';
 import { device } from '../config/ScreenDimensions';
-import { addSongToHistory } from '../actions/index';
+import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -39,6 +40,50 @@ class SongData extends Component {
     });
   };
 
+  addToFavorite = async () => {
+    const userId = await AsyncStorage.getItem('user');
+    if (!userId){
+        return Alert.alert('Bạn chưa đăng nhập!')
+    }
+    const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-favorite`,{
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({userId: userId, songId: this.props.song._id})
+    });
+    const result = await response.json();
+    if (result){
+        this.props.setUser(result);
+    }
+}
+
+addToSongs = async () => {
+    const userId = await AsyncStorage.getItem('user');
+    if (!userId){
+        return Alert.alert('Bạn chưa đăng nhập!')
+    }
+    const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-song`,{
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({userId: userId, songId: this.props.song._id})
+    });
+    const result = await response.json();
+    if (!result){
+        return Alert.alert('Bạn đã thêm bài hát này!')
+    }else{
+        this.props.setUser(result);
+    }
+}
+
+addToPlaylist = () => {
+    Alert.alert('Sắp ra mắt')
+}
+
   render() {
     let item = this.props.song.item;
     let index = this.props.song.index;
@@ -61,22 +106,22 @@ class SongData extends Component {
                 <View style={styles.playerContainer}>
                   <Text style={styles.title}>{item.name}</Text>
                   <Text style={styles.subTitle}>{item.singer.name}</Text>
-                  <TouchableOpacity style={styles.btn}>
+                  <TouchableOpacity style={styles.btn} onPress={() => {this.closeModal(); this.props.play(index)}}>
                     <Icon name="play" size={30} color="#fff" />
                   </TouchableOpacity>
                 </View>
-                <View style={styles.option}>
+                <TouchableOpacity style={styles.option} onPress={() => this.addToFavorite()}>
                   <Icon name="heart" size={30} color="#f25050" />
                   <Text style={styles.text}>Thêm vào yêu thích</Text>
-                </View>
-                <View style={styles.option}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.option} onPress={() => this.addToPlaylist()}>
                   <Icon name="playlist-plus" size={30} color="#000" />
                   <Text style={styles.text}>Thêm vào Playlist</Text>
-                </View>
-                <View style={styles.option}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.option} onPress={() => this.addToSongs()}>
                   <Icon name="plus" size={30} color="#000" />
                   <Text style={styles.text}>Thêm vào danh sách bài hát</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -109,9 +154,10 @@ class SongsComponent extends Component{
   }
 
   playSong = async index => {
+    this.props.navigation.navigate("Player", {songPos: index, playlist: this.props.songs});
     const userId = await AsyncStorage.getItem('user');
     if (userId){
-      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+      const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -119,7 +165,8 @@ class SongsComponent extends Component{
 				},
 				body: JSON.stringify({userId: userId, songId: this.props.songs[index]._id})
       });
-      this.props.addSongToHistory(this.props.songs[index])
+      const updatedUser = await response.json();
+      this.props.setUser(updatedUser)
     } else {
       fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
 				method: 'PUT',
@@ -130,7 +177,6 @@ class SongsComponent extends Component{
 				body: JSON.stringify({songId: this.props.songs[index]._id})
       });
     }
-    this.props.navigation.navigate("Player", {songPos: index, playlist: this.props.songs});
   };
 
   separator = () => {
@@ -159,7 +205,7 @@ class SongsComponent extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+  setUser: bindActionCreators(setUser, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(SongsComponent);
