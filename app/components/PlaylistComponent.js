@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { device } from '../config/ScreenDimensions';
 import MiniPlayer from '../components/MiniPlayer';
@@ -51,49 +51,43 @@ export default class PlaylistComponent extends React.Component {
 
     render() {
         return(
-        <React.Fragment>
-            <SafeAreaView style={{backgroundColor: '#0D47A1'}}/>
-            <SafeAreaView style={{flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
-                <View style={{flex: 1, justifyContent: 'space-between'}}>
-                <View style={styles.container}>
-                    <View style={styles.header}>
-                        <ImageBackground source={{uri: this.state.playlistPicture}} style={styles.imageBackground} blurRadius={22}>
-                        <TouchableOpacity onPress={() => this._goBack()}>
-                                <MaterialIcons name="arrow-back"style={styles.back} size={device.height * 0.038}></MaterialIcons>
-                            </TouchableOpacity> 
-                            <Image source={{uri: this.state.playlistPicture}} style={styles.image}></Image>
-                            <Text style={styles.title}>{this.state.playlistName}</Text>
-                            <Text style={styles.description}>{this.state.playlistDescription}</Text>
-                        </ImageBackground>
-                    </View>
-                    <View style={styles.listSong}>
-                        {   
-                            this.state.isFetching? 
-                            <View style={{flex: 1, justifyContent: 'center'}}>
-                                <ActivityIndicator size='large' color='#0D47A1' />
-                            </View>:
-                            <SongsComponent navigation={this.props.navigation} songs={this.state.data}/>
-                        }
-                        {
-                            this.state.noData?
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>Không có bài hát</Text>
-                            </View>:
-                            null
-                        }
-                    </View>
+        <View style={{flex: 1}}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <ImageBackground source={{uri: this.state.playlistPicture}} style={styles.imageBackground} blurRadius={22}>
+                    <TouchableOpacity onPress={() => this._goBack()}>
+                            <MaterialIcons name="arrow-back"style={styles.back} size={device.height * 0.038}></MaterialIcons>
+                        </TouchableOpacity> 
+                        <Image source={{uri: this.state.playlistPicture}} style={styles.image}></Image>
+                        <Text style={styles.title}>{this.state.playlistName}</Text>
+                        <Text style={styles.description}>{this.state.playlistDescription}</Text>
+                    </ImageBackground>
                 </View>
+                <View style={styles.listSong}>
+                    {   
+                        this.state.isFetching? 
+                        <View style={{flex: 1, justifyContent: 'center'}}>
+                            <ActivityIndicator size='large' color='#0D47A1' />
+                        </View>:
+                        <SongsComponent navigation={this.props.navigation} songs={this.state.data}/>
+                    }
+                    {
+                        this.state.noData?
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text>Không có bài hát</Text>
+                        </View>:
+                        null
+                    }
                 </View>
-                <MiniPlayer navigate={this.props.navigation.navigate}/>
-            </SafeAreaView>
-        </React.Fragment>
+            </View>
+            <MiniPlayer navigate={this.props.navigation.navigate}/>
+        </View>
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between',
         backgroundColor: '#fefefe'
     }, 
     header: {      

@@ -4,7 +4,12 @@ import styles from '../styles/Home';
 import Item from '../components/Item';
 import {topicData} from '../data/data';
 import MiniPlayer from '../components/MiniPlayer';
-import SongOption from '../components/SongOption';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 import { SearchBar, ListItem, Icon } from 'react-native-elements';
 import { songs } from '../data/data';
 
@@ -111,7 +116,22 @@ export default class Search extends React.Component {
                     </View>
                   </View>  
                   <View style={styles.optionIcon}>
-                    <SongOption song={item}/>
+                    <Menu>
+                      <MenuTrigger>
+                        <Icon name="more-vert" size={30} />
+                      </MenuTrigger>
+                      <MenuOptions optionsContainerStyle={{width: 100}}>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 1`)} >
+                          <Text>Tùy chọn 1</Text>
+                        </MenuOption>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 2`)} >
+                          <Text>Tùy chọn 2</Text>
+                        </MenuOption>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 3`)} >
+                          <Text>Tùy chọn 3</Text>
+                        </MenuOption>
+                      </MenuOptions>
+                    </Menu>
                   </View>
                 </View>
                 </TouchableOpacity>))}
