@@ -51,12 +51,15 @@ class SongData extends Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({userId: userId, songId: this.props.song._id})
+        body: JSON.stringify({userId: userId, songId: this.props.song.item._id})
     });
     const result = await response.json();
     if (result){
         this.props.setUser(result);
-    }
+        return Alert.alert('Đã thêm vào danh sách yêu thích!');
+    }else{
+        return Alert.alert('Có lỗi đã xảy ra!')
+  }
 }
 
 addToSongs = async () => {
@@ -70,13 +73,14 @@ addToSongs = async () => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({userId: userId, songId: this.props.song._id})
+        body: JSON.stringify({userId: userId, songId: this.props.song.item._id})
     });
     const result = await response.json();
     if (!result){
-        return Alert.alert('Bạn đã thêm bài hát này!')
+        return Alert.alert('Bạn đã có bài hát này!')
     }else{
         this.props.setUser(result);
+        return Alert.alert('Đã thêm!')
     }
 }
 
@@ -194,7 +198,7 @@ class SongsComponent extends Component{
             ItemSeparatorComponent={() => this.separator()}
             renderItem={({item, index}) => {
               return (
-                <SongData song={({item, index})} navigation={this.props.navigation} play={this.playSong} />
+                <SongData song={({item, index})} navigation={this.props.navigation} play={this.playSong} setUser={this.props.setUser}/>
               );
             }}
           />

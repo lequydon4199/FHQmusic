@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, View, Text, StatusBar, Image, ScrollView, TouchableOpacity, Platform, AsyncStorage, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements'
 import styles from '../styles/Personal';
-import { list } from '../data/data';
+import { list, defaultUser } from '../data/data';
 import MiniPlayer from '../components/MiniPlayer';
 import ListSongs from '../components/ListSongs';
 import { setUser } from '../actions/index';
@@ -64,6 +64,7 @@ class Personal extends React.Component {
                   title='Đăng xuất' 
                   onPress={() => {
                     AsyncStorage.removeItem('user');
+                    this.props.setUser(defaultUser);
                     navigate("Login");
                   }} 
                 />

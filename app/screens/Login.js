@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, AsyncStorage, CheckBox } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
+import { CheckBox } from "react-native-elements";
 import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -56,7 +57,7 @@ class Login extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Enter your username/email"
+									placeholder="Tên đăng nhập"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									textContentType='emailAddress'
 									keyboardType='email-address'
@@ -69,7 +70,7 @@ class Login extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Enter your password"
+									placeholder="Mật khẩu"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									returnKeyType='go'
 									onChangeText={text => this.setState({password: text})}
@@ -80,9 +81,9 @@ class Login extends Component {
 
 							<View style={styles.checkboxContainer}>
 								<CheckBox
-									value={this.state.isChecked}
-									onChange={() => this.setSelection(this.state.isChecked)}
-          							style={styles.checkbox}
+									checked={this.state.isChecked}
+									onPress={() => this.setSelection(this.state.isChecked)}
+          							checkedColor="white"
 								/>
 								<Text style={styles.label}>Nhớ tài khoản ?</Text>
 							</View>
@@ -174,17 +175,16 @@ const styles = StyleSheet.create({
 	},
 	checkboxContainer: {
 		flexDirection: "row",
+		alignItems: 'center',
 		marginRight: 160,
 	},
 	checkbox: {
 		alignSelf: "center",
 		marginLeft: -15,
-		marginTop: 5,
 	},
 	label: {
 		color: "white",
-		marginTop: 10,
-		
+		marginLeft: -15,
 	},
 	textbot: {
 		color: "white",

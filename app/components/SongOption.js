@@ -27,6 +27,9 @@ class SongOption extends React.Component {
         const result = await response.json();
         if (result){
             this.props.setUser(result);
+            return Alert.alert('Đã thêm vào danh sách yêu thích!');
+        }else{
+            return Alert.alert('Có lỗi đã xảy ra!')
         }
     }
 
@@ -45,9 +48,10 @@ class SongOption extends React.Component {
         });
         const result = await response.json();
         if (!result){
-            return Alert.alert('Bạn đã thêm bài hát này!')
+            return Alert.alert('Bạn đã có bài hát này!')
         }else{
             this.props.setUser(result);
+            return Alert.alert('Đã thêm!')
         }
     }
 

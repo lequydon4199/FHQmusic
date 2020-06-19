@@ -17,7 +17,7 @@ export default class Register extends Component {
 
 	register = async () => {
 		if (this.state.password !== this.state.confirmedPassword){
-			this.setState({isConfirmedPassword: false});
+			this.setState({isConfirmedPassword: false, isAvailable: true});
 			return;
 		} else {
 			this.setState({isConfirmedPassword: true, isAvailable: true});
@@ -62,7 +62,7 @@ export default class Register extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Username/Email"
+									placeholder="Tên đăng nhập"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									textContentType='emailAddress'
 									keyboardType='email-address'
@@ -75,7 +75,7 @@ export default class Register extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Password"
+									placeholder="Mật khẩu"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									returnKeyType='next'
 									secureTextEntry={true}
@@ -88,7 +88,7 @@ export default class Register extends Component {
                             <View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Password again"
+									placeholder="Nhập lại mật khẩu"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									onChangeText={text => this.setState({confirmedPassword: text})}
 									returnKeyType='go'

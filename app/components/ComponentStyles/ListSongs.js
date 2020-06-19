@@ -3,8 +3,8 @@ import {device} from '../../config/ScreenDimensions';
 
 export default StyleSheet.create({
   flatList:{
-    paddingTop: device.height*0.01,
-    paddingBottom: device.height*0.01
+    // paddingTop: device.height*0.01,
+    // paddingBottom: device.height*0.01
   },
   container:{
     backgroundColor: '#fff',

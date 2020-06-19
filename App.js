@@ -27,16 +27,16 @@ function TabNavigator() {
 
           if (route.name === 'Trang chủ') {
             iconName = 'home';
-            color = focused? 'black' : 'gray';
+            color = focused? '#66afff' : 'gray';
             size = 30;
           } else if (route.name === 'Tìm kiếm') {
             iconName = 'search';
-            color = focused? 'black' : 'gray';
+            color = focused? '#66afff' : 'gray';
             size = 30;
           }
           else if (route.name === 'Cá nhân') {
             iconName = 'person';
-            color = focused? 'black' : 'gray';
+            color = focused? '#66afff' : 'gray';
             size = 30;
           }
           return <Icon name={iconName} size={size} color={color} />;
